@@ -43,7 +43,7 @@ body {
 
 #result-title {
     font-weight: bold;
-    width: 80%;
+    width: 85%;
     text-align: center;
     background-color: #BAD9B5;
 }
@@ -52,12 +52,12 @@ body {
     padding: 30;
     margin: 30px;
     background-color: #BAD9B5;
-    width: 80%;
+    width: 85%;
     text-align: center;
 }
 
 #second {
-    width: 50%;
+    width: 85%;
     background-color: rgba(255, 255, 255, 0.192);
 }
 
@@ -65,12 +65,12 @@ body {
     font-size: 50px;
     font-weight: bold;
     background-color: #BAD9B5;
-    width: 80%;
+    width: 85%;
     text-align: center;
 }
 
 #redeem {
-    width: 50%;
+    width: 85%;
     height: 150px;
     font-size: 65px;
     margin: 20px;

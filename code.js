@@ -58,7 +58,7 @@ async function redeemTicket(ticketHash) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ hash: ticketHash })
+            body: JSON.stringify({ hash: ticketHash, redeem: true})
         });
 
         if (response.ok) {
