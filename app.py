@@ -16,7 +16,7 @@ def get_guest_info(hash_value):
 def update_inside_status(hash_value, inside_status=True):
     conn = sqlite3.connect('party.db')
     c = conn.cursor()
-    c.execute('UPDATE guests SET inside = ? WHERE hash = ?', (inside_status, hash_value))
+    c.execute('UPDATE guests SET inside = ? WHERE hash = ?', (int(inside_status), hash_value))
     conn.commit()
     conn.close()
 
