@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="code.js" defer></script>
+    <title>test tickets</title>
+  </head>
+  <body>
+    <div class="container" id="1">
+        <div id="reader" style="width: 300px;">1</div>
+        <div id="result"></div>
+        <input type="file" accept="image/*" onchange="handleFile(this.files[0])">
+    </div>
+    <div class="container" id="2">
+        <div class="ticket-number">Ticket Number: </div>
+        <div class="holder-name">Ticket Holder: </div>
+        <div class="scanned">Scanned?:  </div>
+    </div>
+  </body>
+
+</html>
