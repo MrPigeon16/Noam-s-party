@@ -46,7 +46,7 @@ async function checkTicket(ticketHash) {
 
 // If you want to use the QR code scanner:
 function onScanSuccess(decodedText, decodedResult) {
-    resultDIV.innerText = `Scanned: ${decodedText}`;
+    resultDIV.innerText = `${decodedText}`;
     checkTicket(decodedText);
 }
 
@@ -54,7 +54,7 @@ const html5QrCode = new Html5Qrcode("reader");
 
 Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
-      const cameraId = devices[1].id;
+      const cameraId = devices[0].id;
       html5QrCode.start(
         cameraId,
         {
