@@ -52,12 +52,12 @@ const html5QrCode = new Html5Qrcode("reader");
 
 Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
-      const cameraId = devices[1].id;
+      const cameraId = devices[0].id;
       html5QrCode.start(
         cameraId,
         {
           fps: 60,    // Optional, frames per second
-          qrbox: 410  // Optional, scanning box size
+          qrbox: 800  // Optional, scanning box size
         },
         onScanSuccess
       );
@@ -65,12 +65,3 @@ Html5Qrcode.getCameras().then(devices => {
   }).catch(err => {
     console.error("Camera error: ", err);
   });
-
-function handleFile(file) {
-  const html5QrCode = new Html5Qrcode("reader");
-  html5QrCode.scanFile(file, true)
-    .then(decodedText => {
-      document.getElementById("result").innerText = `Scanned from file: ${decodedText}`;
-    })
-    .catch(err => console.error("Scan failed", err));
-}
