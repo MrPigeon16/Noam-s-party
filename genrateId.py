@@ -5,11 +5,11 @@ from qreader import QReader
 import cv2
 
 
-def getExelNames():
+def getExelNames(file,col):
 
-    names = pd.read_excel("names.xlsx")
+    names = pd.read_excel(file)
     # Replace 'ActualColumnName' with the real column name
-    all_names = names['Names'].tolist()
+    all_names = names[col].tolist()
     return all_names
 
 
@@ -57,12 +57,3 @@ def createQR(hashs):
         img = qr.make_image(fill_color="black", back_color="white")
         img.save(f"img{hashing}.png")
         
-
-def main():
-    x = getExelNames()
-
-
-
-
-
-main()
