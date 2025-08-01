@@ -49,7 +49,7 @@ async function checkTicket(ticketHash) {
 }
 
 
-const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/submit";
+const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/redeem";
 
 async function redeemTicket(ticketHash) {
     try {
@@ -79,8 +79,13 @@ function onScanSuccess(decodedText, decodedResult) {
     return decodedText;
 }
 
-buttonDIV.addEventListener("click", (decodedText) => {
-  redeemTicket(decodedText)
+buttonDIV.addEventListener("click", () => {
+  const ticketNumber = ticketCheckDIV.value;
+  if (ticketNumber === "") {
+    statusDIV.textContent = "Nothing to redeem";
+    return;
+  }
+  redeemTicket(ticketNumber);
 });
 
 const html5QrCode = new Html5Qrcode("reader");
