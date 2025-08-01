@@ -42,7 +42,6 @@ def redeem():
     guest = get_guest_info(hash_value)
     if guest:
         update_inside_status(hash_value, True)
-        # Get updated guest info
         updated_guest = get_guest_info(hash_value)
         return jsonify({"status": "redeemed", "guest": {
             "id": updated_guest[0],
