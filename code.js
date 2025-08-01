@@ -1,6 +1,5 @@
 "use strict"
 
-const ticketCheckDIV = document.querySelector(".ticket-check");
 const submitButtonDIV = document.querySelector(".submit");
 const ticketNumberDIV = document.querySelector(".ticket-number")
 const scannedDIV = document.querySelector(".scanned")
@@ -79,8 +78,8 @@ function onScanSuccess(decodedText, decodedResult) {
     return decodedText;
 }
 
-buttonDIV.addEventListener("click", () => {
-  const ticketNumber = ticketCheckDIV.value;
+buttonDIV.addEventListener("click", (decodedText) => {
+  const ticketNumber = decodedText;
   if (ticketNumber === "") {
     statusDIV.textContent = "Nothing to redeem";
     return;
