@@ -8,7 +8,7 @@ const holderNameDIV = document.querySelector(".holder-name")
 const resultDIV = document.getElementById("result")
 
 // Replace this with your Flask backend URL
-const BACKEND_URL = "https://backend-wx19.onrender.com/";
+const BACKEND_URL = "https://backend-wx19.onrender.com/submit";
 
 // Function to check ticket with backend
 async function checkTicket(ticketHash) {
