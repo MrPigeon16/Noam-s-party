@@ -38,3 +38,4 @@ def get_guest_info(hash_value):
     conn.close()
     return guest
 
+print(get_guest_info(genrateId.calculate_sha256("ilay")))
