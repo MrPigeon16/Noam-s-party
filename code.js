@@ -8,7 +8,7 @@ const holderNameDIV = document.querySelector(".holder-name")
 const resultDIV = document.getElementById("result")
 
 // Replace this with your Flask backend URL
-const BACKEND_URL = "https://your-flask-app.onrender.com/submit";
+const BACKEND_URL = "https://backend-wx19.onrender.com/";
 
 // Function to check ticket with backend
 async function checkTicket(ticketHash) {
@@ -43,16 +43,6 @@ async function checkTicket(ticketHash) {
         console.error(error);
     }
 }
-
-// Example: Use this function when a ticket is scanned or submitted
-submitButtonDIV.addEventListener("click", () => {
-    const ticketNumber = ticketCheckDIV.value;
-    if (ticketNumber === "") {
-        resultDIV.textContent = "Nothing to check";
-        return;
-    }
-    checkTicket(ticketNumber);
-});
 
 // If you want to use the QR code scanner:
 function onScanSuccess(decodedText, decodedResult) {
