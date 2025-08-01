@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: flask-app
+    env: python
+    startCommand: python backend.py
+    plan: free
+    envVars:
+      - key: FLASK_ENV
+        value: production
+    autoDeploy: true
+    region: oregon
+    branch: main
+    healthCheckPath: /
+    runtime: python3
+    ports:
+      - 10000
