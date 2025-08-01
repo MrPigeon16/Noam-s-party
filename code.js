@@ -48,9 +48,12 @@ async function checkTicket(ticketHash) {
     }
 }
 
+
+const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/submit";
+
 async function redeemTicket(ticketHash) {
     try {
-        const response = await fetch(BACKEND_URL, {
+        const response = await fetch(BACKEND_URL_REEDEM, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
