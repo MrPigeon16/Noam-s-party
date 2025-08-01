@@ -1,5 +1,5 @@
 import sqlite3
-
+import genrateId
 def create_database():
     conn = sqlite3.connect('party.db')
     c = conn.cursor()
@@ -37,3 +37,4 @@ def get_guest_info(hash_value):
     guest = c.fetchone()
     conn.close()
     return guest
+
