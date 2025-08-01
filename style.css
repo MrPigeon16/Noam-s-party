@@ -58,7 +58,20 @@ body {
     font-size: 50px;
     font-weight: bold;
     background-color: #BAD9B5;
-    width: 85%;
+    width: 80%;
     text-align: center;
+}
 
+#redeem {
+    width: 50%;
+    height: 150px;
+    font-size: 65px;
+    margin: 20px;
+    background-color: #BAD9B5;
+    border: none;
+    border-radius: 10px;
+    color: #ABA361;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    cursor: pointer;
 }

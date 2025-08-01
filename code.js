@@ -6,6 +6,8 @@ const ticketNumberDIV = document.querySelector(".ticket-number")
 const scannedDIV = document.querySelector(".scanned")
 const holderNameDIV = document.querySelector(".holder-name")
 const resultDIV = document.getElementById("result")
+const buttonDIV = document.getElementById("redeem")
+const statusDIV = document.getElementById("status")
 
 // Replace this with your Flask backend URL
 const BACKEND_URL = "https://backend-wx19.onrender.com/submit";
@@ -22,24 +24,47 @@ async function checkTicket(ticketHash) {
         });
 
         if (!response.ok) {
-            resultDIV.textContent = "Ticket not found!";
-            ticketNumberDIV.textContent = "";
-            holderNameDIV.textContent = "";
-            scannedDIV.textContent = "";
+            statusDIV.textContent = "Ticket not found!";
+            ticketNumberDIV.textContent = "Ticket Number: ";
+            holderNameDIV.textContent = "Ticket Holder: ";
+            scannedDIV.textContent = "Scanned?: ";
             return;
         }
 
         const data = await response.json();
         const guest = data.guest;
+
+        statusDIV.textContent = "Ticket found!";  
         ticketNumberDIV.textContent = `Ticket Number: ${guest.id}`;
         holderNameDIV.textContent = `Ticket Holder: ${guest.name}`;
         scannedDIV.textContent = `Scanned?: ${guest.inside}`;
-        resultDIV.textContent = "Ticket found!";
+
     } catch (error) {
-        resultDIV.textContent = "Error connecting to server.";
-        ticketNumberDIV.textContent = "";
-        holderNameDIV.textContent = "";
-        scannedDIV.textContent = "";
+        statusDIV.textContent = "Error connecting to server.";
+        ticketNumberDIV.textContent = "Ticket Number: ";
+        holderNameDIV.textContent = "Ticket Holder: ";
+        scannedDIV.textContent = "Scanned?: ";
+        console.error(error);
+    }
+}
+
+async function redeemTicket(ticketHash) {
+    try {
+        const response = await fetch(BACKEND_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ hash: ticketHash })
+        });
+
+        if (response.ok) {
+            statusDIV.textContent = "Redeemed!";
+            return;
+        }
+        
+    } catch (error) {
+        statusDIV.textContent = "Error connecting to server.";
         console.error(error);
     }
 }
@@ -48,18 +73,23 @@ async function checkTicket(ticketHash) {
 function onScanSuccess(decodedText, decodedResult) {
     resultDIV.innerText = `${decodedText}`;
     checkTicket(decodedText);
+    return decodedText;
 }
+
+buttonDIV.addEventListener("click", (decodedText) => {
+  redeemTicket(decodedText)
+});
 
 const html5QrCode = new Html5Qrcode("reader");
 
 Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
-      const cameraId = devices[0].id;
+      const cameraId = devices[1].id;
       html5QrCode.start(
         cameraId,
         {
           fps: 60,    // Optional, frames per second
-          qrbox: 800  // Optional, scanning box size
+          qrbox: 500  // Optional, scanning box size
         },
         onScanSuccess
       );
