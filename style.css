@@ -5,6 +5,7 @@ body {
     justify-content: center;
     background-color: aqua;
     font-size: 50px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .container {
@@ -20,4 +21,30 @@ body {
 #reader {
     width: 90%;
     border: solid 2px black;
+}
+
+#scanned-id-container {
+    width: 85%;
+    display: flex;
+    padding: 20px;
+    margin: 20px;
+    background-color: grey;
+    text-align: center;
+}
+
+#title {
+    width: 30%;
+    font-weight: bold;
+}
+
+#result {
+    width: 70%;
+    overflow-x: hidden;
+}
+
+#result-title {
+    font-weight: bold;
+    width: 50%;
+    text-align: center;
+    background-color: gray;
 }
