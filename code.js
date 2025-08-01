@@ -7,46 +7,58 @@ const scannedDIV = document.querySelector(".scanned")
 const holderNameDIV = document.querySelector(".holder-name")
 const resultDIV = document.getElementById("result")
 
-const myDataBase = [
-    {
-        ticketHolder: "Noam Binyamin",
-        ticketID: "1",
-        scanned: false
-    },
-    {
-        ticketHolder: "Ilay Binyamin",
-        ticketID: "1313",
-        scanned: false
-    },
-    {
-        ticketHolder: "Michal Shamir",
-        ticketID: "12345",
-        scanned: false
+// Replace this with your Flask backend URL
+const BACKEND_URL = "https://your-flask-app.onrender.com/submit";
+
+// Function to check ticket with backend
+async function checkTicket(ticketHash) {
+    try {
+        const response = await fetch(BACKEND_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ hash: ticketHash })
+        });
+
+        if (!response.ok) {
+            resultDIV.textContent = "Ticket not found!";
+            ticketNumberDIV.textContent = "";
+            holderNameDIV.textContent = "";
+            scannedDIV.textContent = "";
+            return;
+        }
+
+        const data = await response.json();
+        const guest = data.guest;
+        ticketNumberDIV.textContent = `Ticket Number: ${guest.id}`;
+        holderNameDIV.textContent = `Ticket Holder: ${guest.name}`;
+        scannedDIV.textContent = `Scanned?: ${guest.inside}`;
+        resultDIV.textContent = "Ticket found!";
+    } catch (error) {
+        resultDIV.textContent = "Error connecting to server.";
+        ticketNumberDIV.textContent = "";
+        holderNameDIV.textContent = "";
+        scannedDIV.textContent = "";
+        console.error(error);
     }
-]
+}
 
-/*
-submitButtonDIV.addEventListener("click", () =>{
+// Example: Use this function when a ticket is scanned or submitted
+submitButtonDIV.addEventListener("click", () => {
     const ticketNumber = ticketCheckDIV.value;
-    //ticketCheckDIV.value = "" // reset the submit box value for the next one
-
     if (ticketNumber === "") {
-        console.log("Nothing to check")
+        resultDIV.textContent = "Nothing to check";
         return;
     }
-
-    const foundTicket = myDataBase.find(ticket => ticket.ticketID === ticketNumber)
-    
-    ticketNumberDIV.textContent = `Ticket Number: ${foundTicket.ticketID}`
-    holderNameDIV.textContent = `Ticket Holder: ${foundTicket.ticketHolder}`
-    scannedDIV.textContent = `Scanned?: ${foundTicket.scanned}`
+    checkTicket(ticketNumber);
 });
-*/
 
+// If you want to use the QR code scanner:
 function onScanSuccess(decodedText, decodedResult) {
-    // Handle the scanned code as you like
     resultDIV.innerText = `Scanned: ${decodedText}`;
-  }
+    checkTicket(decodedText);
+}
 
 const html5QrCode = new Html5Qrcode("reader");
 
