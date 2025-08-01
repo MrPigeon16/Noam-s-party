@@ -1,25 +1,11 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # This allows requests from your frontend (GitHub Pages)
 
-@app.route('/')
-def home():
-    return "Hello from Flask on Render!"
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@app.route('/submit', methods=['POST'])
+def submit():
+    data = request.get_json()
+    print(data)  # You can also save this to a DB
+    return jsonify({"status": "ok", "received": data})
