@@ -37,3 +37,5 @@ def get_guest_info(hash_value):
     conn.close()
     return guest
 
+
+
