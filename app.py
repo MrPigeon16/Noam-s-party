@@ -36,8 +36,8 @@ def submit():
     else:
         return jsonify({"status": "not_found"}), 404
 
-@app.route('/valid', methods=['POST'])
-def valid():
+@app.route('/redeem', methods=['POST'])
+def redeem():
     try:
         data = request.get_json()
         hash_value = data.get("hash")
