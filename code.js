@@ -56,7 +56,7 @@ function onScanSuccess(decodedText) {
   // Checking the ticket with the back-end
   checkTicket(lastScannedTicket);
 
-  // Vibrate if supported
+  // Vibrate (works on Android Only)
   if ("vibrate" in navigator) {
     navigator.vibrate(200);
   }

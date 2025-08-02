@@ -17,36 +17,36 @@
     <script src="code.js" defer></script>
     <title>Noam's Ticket Reader</title>
   </head>
+
   <body>
-    <div class="container" id="first">
-      <div id="main-title">Noam's and Duek Party! 🥳</div>
+    <div class="scanner-container">
+      <div id="title">Noam's and Duek Party! 🥳</div>
       <div id="reader">SCANNER</div>
-      <div id="scanned-id-container">
-        <div id="title">Scanned ID:</div>
-        <div id="result">WATING FOR SCAN ID</div>
-      </div>
+      <div id="subtitle">Scanned ID:</div>
+      <div id="result">WATING FOR SCAN ID</div>
     </div>
 
-    <div id="result-title">Status:</div>
-    <div id="status">Ready to scan...</div>
+    <div id="subtitle">Status:</div>
+    <div id="plain-text">Ready to scan...</div>
 
-    <div id="result-title">Result</div>
-
-    <div class="container" id="second">
-      <div class="subtitle">Ticket Number:</div>
+    <div id="subtitle">Result</div>
+    <div class="result-container">
+      <div id="bolder-text">Ticket Number:</div>
       <div class="ticket-number">None</div>
-      <div class="subtitle">Ticket Holder:</div>
+      <div id="bolder-text">Ticket Holder:</div>
       <div class="holder-name">None</div>
-      <div class="subtitle">Redeemed?:</div>
+      <div id="bolder-text">Redeemed?:</div>
       <div class="scanned">None</div>
     </div>
+
     <div class="button-container">
       <button id="redeem">Redeem Ticket</button>
       <button id="refresh">Scan again</button>
     </div>
-    <div id="result-title">People out of 0:</div>
+
+    <div id="subtitle">People (0 out of 0:)</div>
     <div class="people-list">
-      <div class="subtitle">Noam Binyamin</div>
+      <div>Noam Binyamin</div>
       <div>SCANNED</div>
     </div>
   </body>
