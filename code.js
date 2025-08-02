@@ -48,7 +48,7 @@ async function checkTicket(ticketHash) {
 }
 
 
-const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/redeem";
+const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/valid";
 
 async function redeemTicket(ticketHash) {
     try {
