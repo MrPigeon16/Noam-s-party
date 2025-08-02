@@ -3,15 +3,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #eff7cf;
+  background-color: #2a1a5e;
   font-size: 35px;
   font-family: "roboto";
-  color: #aba361;
+  color: #38237a;
 }
 
 #title {
   font-weight: bold;
   margin: 10px;
+  color: white;
 }
 
 .scanner-container {
@@ -24,7 +25,7 @@ body {
 
 #reader {
   width: 90%;
-  border: solid 2px #bad9b5;
+  border: solid 2px #8a7abe;
   border-radius: 10px;
   margin: 10px;
 }
@@ -33,7 +34,7 @@ body {
   font-weight: bold;
   width: 85%;
   text-align: center;
-  background-color: #bad9b5;
+  background-color: #49478c;
   color: white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -81,7 +82,7 @@ button {
   width: 45%;
   height: 70px;
   font-size: 35px;
-  background-color: #bad9b5;
+  background-color: #8a88d4;
   border: none;
   border-radius: 10px;
   color: white;
