@@ -3,7 +3,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #2a1a5e;
   font-size: 35px;
   font-family: "roboto";
   color: #38237a;
@@ -28,13 +27,19 @@ body {
   border: solid 2px #8a7abe;
   border-radius: 10px;
   margin: 10px;
+  color: white;
+  text-align: center;
 }
 
-#subtitle {
+.subtitle {
   font-weight: bold;
   width: 85%;
   text-align: center;
-  background-color: #49478c;
+  background: linear-gradient(
+    90deg,
+    rgba(73, 71, 140, 1) 0%,
+    rgba(122, 121, 173, 1) 100%
+  );
   color: white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -45,14 +50,18 @@ body {
   overflow-x: hidden;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.808);
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  height: 80px;
+  line-height: 80px;
 }
 
-#plain-text {
+.plain-text {
   width: 85%;
+  height: 80px;
+  line-height: 80px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.808);
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .result-container {
@@ -64,25 +73,32 @@ body {
   align-items: center;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.808);
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 #bolder-text {
   font-weight: bolder;
+  height: 60px;
+  line-height: 60px;
 }
 
 .button-container {
   display: flex;
   width: 85%;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 button {
   width: 45%;
   height: 70px;
   font-size: 35px;
-  background-color: #8a88d4;
+  background: linear-gradient(
+    90deg,
+    rgba(73, 71, 140, 1) 0%,
+    rgba(122, 121, 173, 1) 100%
+  );
+
   border: none;
   border-radius: 10px;
   color: white;
@@ -96,10 +112,43 @@ button {
   grid-template-columns: repeat(2, 1fr);
   max-height: fit-content;
   width: 85%;
-  height: 200px;
+  height: 400px;
+  line-height: 60px;
   overflow-y: scroll;
   justify-content: center;
   align-items: center;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.808);
+}
+
+.plain-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(42, 26, 94, 1) 0%,
+    rgba(20, 13, 59, 1) 100%
+  );
+}
+
+.bad-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(128, 0, 0, 1) 0%,
+    rgba(196, 12, 18, 1) 100%
+  );
+}
+
+.good-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 128, 19, 1) 0%,
+    rgba(175, 255, 94, 1) 100%
+  );
+}
+
+.scanned-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(232, 159, 14, 1) 0%,
+    rgba(255, 195, 0, 1) 100%
+  );
 }

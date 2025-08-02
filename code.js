@@ -56,11 +56,6 @@ function onScanSuccess(decodedText) {
   // Checking the ticket with the back-end
   checkTicket(lastScannedTicket);
 
-  // Vibrate (works on Android Only)
-  if ("vibrate" in navigator) {
-    navigator.vibrate(200);
-  }
-
   // Returning the last scanned ticket
   return lastScannedTicket;
 }
@@ -82,7 +77,8 @@ async function checkTicket(ticketHash) {
       ticketNumberDIV.textContent = "not found";
       holderNameDIV.textContent = "not found";
       scannedDIV.textContent = "not found";
-      bodyDIV.style.backgroundColor = "#A80D1E";
+      bodyDIV.className = ""; // Resetting the body class
+      bodyDIV.classList.add("bad-bg");
       return;
     }
 
@@ -99,10 +95,11 @@ async function checkTicket(ticketHash) {
     scannedDIV.textContent = `${guest.inside}`;
 
     // Checking if guest's ticket already scanned and changint the background color accordingly
+    bodyDIV.className = ""; // Resetting the body class
     if (guest.inside) {
-      bodyDIV.style.backgroundColor = "#EB910C";
+      bodyDIV.classList.add("scanned-bg");
     } else {
-      bodyDIV.style.backgroundColor = "#44A802";
+      bodyDIV.classList.add("good-bg");
     }
   } catch (error) {
     // If there is an error connecting to the server, display an error message
@@ -110,7 +107,8 @@ async function checkTicket(ticketHash) {
     ticketNumberDIV.textContent = "Error";
     holderNameDIV.textContent = "Error";
     scannedDIV.textContent = "Error";
-    bodyDIV.style.backgroundColor = "red";
+    bodyDIV.className = ""; // Resetting the body class
+    bodyDIV.classList.add("bad-bg");
     console.error(error);
   }
 }
@@ -156,11 +154,12 @@ async function redeemTicket(ticketHash) {
 refreshButtonDIV.addEventListener("click", () => {
   // Resetting the UI elements
   statusDIV.textContent = "Ready to scan...";
-  ticketNumberDIV.textContent = "None";
-  holderNameDIV.textContent = "None";
-  scannedDIV.textContent = "None";
-  resultDIV.textContent = "WATING FOR SCAN ID";
-  bodyDIV.style.backgroundColor = "#EFF7CF";
+  ticketNumberDIV.textContent = "-";
+  holderNameDIV.textContent = "-";
+  scannedDIV.textContent = "-";
+  resultDIV.textContent = "Waiting for Scan ID...";
+  bodyDIV.className = ""; // Resetting the body class
+  bodyDIV.classList.add("plain-bg");
 
   // resetting the last scanned ticket
   lastScannedTicket = "";
@@ -190,6 +189,30 @@ const peopleList = [
   ["John Doe", "NOT SCANNED"],
   ["Jane Smith", "SCANNED"],
   ["Alice Johnson", "NOT SCANNED"],
+  ["Bob Brown", "SCANNED"],
+  ["Charlie Davis", "NOT SCANNED"],
+  ["Eve White", "SCANNED"],
+  ["Frank Black", "NOT SCANNED"],
+  ["Grace Green", "SCANNED"],
+  ["Hank Blue", "NOT SCANNED"],
+  ["Ivy Yellow", "SCANNED"],
+  ["Jack Red", "NOT SCANNED"],
+  ["Kathy Purple", "SCANNED"],
+  ["Leo Orange", "NOT SCANNED"],
+  ["Mia Pink", "SCANNED"],
+  ["Nina Gray", "NOT SCANNED"],
+  ["Oscar Silver", "SCANNED"],
+  ["Paul Gold", "NOT SCANNED"],
+  ["Quinn Teal", "SCANNED"],
+  ["Rita Cyan", "NOT SCANNED"],
+  ["Sam Magenta", "SCANNED"],
+  ["Tina Maroon", "NOT SCANNED"],
+  ["Uma Olive", "SCANNED"],
+  ["Vera Coral", "NOT SCANNED"],
+  ["Will Indigo", "SCANNED"],
+  ["Xena Violet", "NOT SCANNED"],
+  ["Yara Peach", "SCANNED"],
+  ["Zane Mint", "NOT SCANNED"],
 ];
 
 peopleListReader(peopleList);
