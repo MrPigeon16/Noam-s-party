@@ -1,13 +1,13 @@
 "use strict"
 
 const ticketCheckDIV = document.querySelector(".ticket-check");
-const ticketNumberDIV = document.querySelector(".ticket-number")
-const scannedDIV = document.querySelector(".scanned")
-const holderNameDIV = document.querySelector(".holder-name")
-const resultDIV = document.getElementById("result")
-const buttonDIV = document.getElementById("redeem")
-const statusDIV = document.getElementById("status")
-const refreshDIV = document.getElementById("refresh")
+const ticketNumberDIV = document.querySelector(".ticket-number");
+const scannedDIV = document.querySelector(".scanned");
+const holderNameDIV = document.querySelector(".holder-name");
+const resultDIV = document.getElementById("result");
+const buttonDIV = document.getElementById("redeem");
+const statusDIV = document.getElementById("status");
+const refreshDIV = document.getElementById("refresh");
 
 // Backend URLs
 const BACKEND_URL = "https://backend-wx19.onrender.com/submit";
@@ -110,7 +110,7 @@ function onScanSuccess(decodedText, decodedResult) {
 const html5QrCode = new Html5Qrcode("reader");
 Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
-      const cameraId = devices[0].id; // Use the first camera by default
+      const cameraId = devices[1].id; // Use the first camera by default
       html5QrCode.start(
         cameraId,
         {
