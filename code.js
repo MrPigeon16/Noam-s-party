@@ -1,5 +1,6 @@
 "use strict"
 
+const ticketCheckDIV = document.querySelector(".ticket-check");
 const ticketNumberDIV = document.querySelector(".ticket-number")
 const scannedDIV = document.querySelector(".scanned")
 const holderNameDIV = document.querySelector(".holder-name")
@@ -8,8 +9,9 @@ const buttonDIV = document.getElementById("redeem")
 const statusDIV = document.getElementById("status")
 const refreshDIV = document.getElementById("refresh")
 
-// Replace this with your Flask backend URL
+// Backend URLs
 const BACKEND_URL = "https://backend-wx19.onrender.com/submit";
+const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/redeem";
 
 // Function to check ticket with backend
 async function checkTicket(ticketHash) {
@@ -47,9 +49,7 @@ async function checkTicket(ticketHash) {
     }
 }
 
-
-const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/valid";
-
+// Function to redeem ticket
 async function redeemTicket(ticketHash) {
     try {
         const response = await fetch(BACKEND_URL_REEDEM, {
@@ -62,7 +62,11 @@ async function redeemTicket(ticketHash) {
 
         if (response.ok) {
             statusDIV.textContent = "Redeemed!";
+            // Optionally, refresh ticket info after redeem
+            checkTicket(ticketHash);
             return;
+        } else {
+            statusDIV.textContent = "Redeem failed!";
         }
         
     } catch (error) {
@@ -71,34 +75,42 @@ async function redeemTicket(ticketHash) {
     }
 }
 
-buttonDIV.addEventListener("click", (decodedText) => {
-  const ticketNumber = decodedText;
-  if (ticketNumber === "") {
-    statusDIV.textContent = "Nothing to redeem";
-    return;
-  }
-  redeemTicket(ticketNumber);
+// Redeem button event handler (get value from input)
+buttonDIV.addEventListener("click", () => {
+    if (!ticketCheckDIV) {
+        statusDIV.textContent = "No input field found!";
+        return;
+    }
+    const ticketNumber = ticketCheckDIV.value;
+    if (ticketNumber === "") {
+        statusDIV.textContent = "Nothing to redeem";
+        return;
+    }
+    redeemTicket(ticketNumber);
 });
 
+// Refresh button event handler
 refreshDIV.addEventListener("click", () => {
     statusDIV.textContent = "Ready to Scan";
     ticketNumberDIV.textContent = "None";
     holderNameDIV.textContent = "None";
     scannedDIV.textContent = "None";
+    if (ticketCheckDIV) ticketCheckDIV.value = "";
 });
 
-// QR Code handeler:
+// QR Code handler:
 function onScanSuccess(decodedText, decodedResult) {
     resultDIV.innerText = `${decodedText}`;
     checkTicket(decodedText);
+    if (ticketCheckDIV) ticketCheckDIV.value = decodedText;
     return decodedText;
 }
 
-// Camera and QR handeler
+// Camera and QR handler
 const html5QrCode = new Html5Qrcode("reader");
 Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
-      const cameraId = devices[1].id;
+      const cameraId = devices[0].id; // Use the first camera by default
       html5QrCode.start(
         cameraId,
         {
