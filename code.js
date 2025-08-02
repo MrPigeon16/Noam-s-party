@@ -1,6 +1,5 @@
 "use strict"
 
-const submitButtonDIV = document.querySelector(".submit");
 const ticketNumberDIV = document.querySelector(".ticket-number")
 const scannedDIV = document.querySelector(".scanned")
 const holderNameDIV = document.querySelector(".holder-name")
