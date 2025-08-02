@@ -51,13 +51,19 @@ body {
 #status {
     padding: 30;
     margin: 30px;
-    background-color: #BAD9B5;
     width: 85%;
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.192);;
 }
 
 #second {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     width: 85%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     background-color: rgba(255, 255, 255, 0.192);
 }
 
@@ -69,8 +75,19 @@ body {
     text-align: center;
 }
 
-#redeem {
+.subtitle {
+    font-weight: bolder;
+}
+
+.button-container {
+    display: flex;
     width: 85%;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+button {
+    width: 45%;
     height: 150px;
     font-size: 65px;
     margin: 20px;
@@ -81,4 +98,16 @@ body {
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
     cursor: pointer;
+}
+
+.list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 85%;
+    height: 800px;
+    overflow-y:scroll;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.192);
 }

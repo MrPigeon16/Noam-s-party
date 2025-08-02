@@ -7,6 +7,7 @@ const holderNameDIV = document.querySelector(".holder-name")
 const resultDIV = document.getElementById("result")
 const buttonDIV = document.getElementById("redeem")
 const statusDIV = document.getElementById("status")
+const refreshDIV = document.getElementById("refresh")
 
 // Replace this with your Flask backend URL
 const BACKEND_URL = "https://backend-wx19.onrender.com/submit";
@@ -24,9 +25,9 @@ async function checkTicket(ticketHash) {
 
         if (!response.ok) {
             statusDIV.textContent = "Ticket not found!";
-            ticketNumberDIV.textContent = "Ticket Number: ";
-            holderNameDIV.textContent = "Ticket Holder: ";
-            scannedDIV.textContent = "Scanned?: ";
+            ticketNumberDIV.textContent = "not found";
+            holderNameDIV.textContent = "not found";
+            scannedDIV.textContent = "not found";
             return;
         }
 
@@ -34,15 +35,15 @@ async function checkTicket(ticketHash) {
         const guest = data.guest;
 
         statusDIV.textContent = "Ticket found!";  
-        ticketNumberDIV.textContent = `Ticket Number: ${guest.id}`;
-        holderNameDIV.textContent = `Ticket Holder: ${guest.name}`;
-        scannedDIV.textContent = `Scanned?: ${guest.inside}`;
+        ticketNumberDIV.textContent = `${guest.id}`;
+        holderNameDIV.textContent = `${guest.name}`;
+        scannedDIV.textContent = `${guest.inside}`;
 
     } catch (error) {
         statusDIV.textContent = "Error connecting to server.";
-        ticketNumberDIV.textContent = "Ticket Number: ";
-        holderNameDIV.textContent = "Ticket Holder: ";
-        scannedDIV.textContent = "Scanned?: ";
+        ticketNumberDIV.textContent = "Error";
+        holderNameDIV.textContent = "Error";
+        scannedDIV.textContent = "Error";
         console.error(error);
     }
 }
@@ -71,13 +72,6 @@ async function redeemTicket(ticketHash) {
     }
 }
 
-// If you want to use the QR code scanner:
-function onScanSuccess(decodedText, decodedResult) {
-    resultDIV.innerText = `${decodedText}`;
-    checkTicket(decodedText);
-    return decodedText;
-}
-
 buttonDIV.addEventListener("click", (decodedText) => {
   const ticketNumber = decodedText;
   if (ticketNumber === "") {
@@ -87,8 +81,22 @@ buttonDIV.addEventListener("click", (decodedText) => {
   redeemTicket(ticketNumber);
 });
 
-const html5QrCode = new Html5Qrcode("reader");
+refreshDIV.addEventListener("click", () => {
+    statusDIV.textContent = "Ready to Scan";
+    ticketNumberDIV.textContent = "None";
+    holderNameDIV.textContent = "None";
+    scannedDIV.textContent = "None";
+});
 
+// QR Code handeler:
+function onScanSuccess(decodedText, decodedResult) {
+    resultDIV.innerText = `${decodedText}`;
+    checkTicket(decodedText);
+    return decodedText;
+}
+
+// Camera and QR handeler
+const html5QrCode = new Html5Qrcode("reader");
 Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
       const cameraId = devices[1].id;

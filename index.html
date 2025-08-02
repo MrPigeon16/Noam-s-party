@@ -11,21 +11,38 @@
   <body>
     <div class="container" id="first">
       <div id="main-title">Scan Ticket Here:</div>
-        <div id="reader">SCANNER</div>
-        <div id="scanned-id-container">
-          <div id="title">Scanned ID:</div>
-          <div id="result">NO ID SCANNED</div>
+      <div id="reader">SCANNER</div>
+      <div id="scanned-id-container">
+        <div id="title">Scanned ID:</div>
+        <div id="result">NO ID SCANNED</div>
         </div>
     </div>
     
+    <div id="result-title">Status:</div>
     <div id="status">Ready to scan...</div>
 
+    <div id="result-title">Result</div>
+
     <div class="container" id="second">
-        <div id="result-title">Result</div>
-        <div class="ticket-number">Ticket Number: </div>
-        <div class="holder-name">Ticket Holder: </div>
-        <div class="scanned">Scanned?: </div>
-        <button id="redeem">Redeem Ticket</button>
+      <div class="subtitle">Ticket Number: </div>
+      <div class="ticket-number">None </div>
+      <div class="subtitle">Ticket Holder: </div>
+      <div class="holder-name">None</div>
+      <div class="subtitle">Scanned?: </div>
+      <div class="scanned">None</div>
+    </div>
+    <div class="button-container">
+      <button id="redeem">Redeem Ticket</button>
+      <button id="refresh">Scan again</button>
+    </div>
+    <div id="result-title">People (0%):</div>
+    <div class="list">
+      <div class="subtitle">Noam Binyamin</div>
+      <div>SCANNED</div>
+      <div class="subtitle">Ilay Binyamin</div>
+      <div>NOT SCANNED</div>
+      <div class="subtitle">Ilay Binyamin</div>
+      <div>NOT SCANNED</div>
     </div>
   </body>
 </html>
