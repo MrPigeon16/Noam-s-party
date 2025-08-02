@@ -38,14 +38,25 @@ def submit():
 
 @app.route('/redeem', methods=['POST'])
 def redeem():
-    data = request.get_json()
-    hash_value = data.get("hash")
-    database.update_inside_status(hash_value,1)
-    guest = database.get_guest_info(hash_value)
-    return jsonify({"status": "ok", "guest": {
-            "id": guest[0],
-            "name": guest[1],
-            "hash": guest[2],
-            "inside": bool(guest[3])
+    try:
+        data = request.get_json()
+        hash_value = data.get("hash")
+        if not hash_value:
+            return jsonify({"status": "error", "message": "No hash provided"}), 400
+
+        guest = database.get_guest_info(hash_value)
+        if not guest:
+            return jsonify({"status": "not_found"}), 404
+
+        database.update_inside_status(hash_value, 1)
+        updated_guest = database.get_guest_info(hash_value)
+        return jsonify({"status": "ok", "guest": {
+            "id": updated_guest[0],
+            "name": updated_guest[1],
+            "hash": updated_guest[2],
+            "inside": bool(updated_guest[3])
         }})
+    except Exception as e:
+        print("Error in /redeem:", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
