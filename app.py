@@ -36,8 +36,8 @@ def submit():
     else:
         return jsonify({"status": "not_found"}), 404
 
-@app.route('/redeem', methods=['POST'])
-def redeem():
+@app.route('/valid', methods=['POST'])
+def valid():
     try:
         data = request.get_json()
         hash_value = data.get("hash")
@@ -58,5 +58,5 @@ def redeem():
         }})
     except Exception as e:
         print("Error in /redeem:", e)
-        return jsonify({"status": "error", "message": str(e)}), 500
+        return jsonify({"status": "error", "message, I got here somehow": str(e)}), 500
 
