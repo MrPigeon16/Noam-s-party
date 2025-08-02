@@ -38,4 +38,5 @@ def get_guest_info(hash_value):
     conn.close()
     return guest
 
-print(get_guest_info(genrateId.calculate_sha256("ilay")))
+update_inside_status("996943cf0f50099be6331a2b315e552b97978539616fa2b55a77cd19241dbc41",0)
+print(get_guest_info("996943cf0f50099be6331a2b315e552b97978539616fa2b55a77cd19241dbc41"))

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
+import database
 
 app = Flask(__name__)
 CORS(app)  # This allows requests from your frontend (GitHub Pages)
@@ -39,15 +40,12 @@ def submit():
 def redeem():
     data = request.get_json()
     hash_value = data.get("hash")
-    guest = get_guest_info(hash_value)
-    if guest:
-        update_inside_status(hash_value, True)
-        updated_guest = get_guest_info(hash_value)
-        return jsonify({"status": "redeemed", "guest": {
-            "id": updated_guest[0],
-            "name": updated_guest[1],
-            "hash": updated_guest[2],
-            "inside": bool(updated_guest[3])
+    database.update_inside_status(hash_value,1)
+    guest = database.get_guest_info(hash_value)
+    return jsonify({"status": "ok", "guest": {
+            "id": guest[0],
+            "name": guest[1],
+            "hash": guest[2],
+            "inside": bool(guest[3])
         }})
-    else:
-        return jsonify({"status": "not_found"}), 404
+
