@@ -5,7 +5,7 @@ body {
   justify-content: center;
   background-color: #eff7cf;
   font-size: 35px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "roboto";
   color: #aba361;
 }
 
@@ -97,7 +97,7 @@ button {
   border-radius: 10px;
   color: #aba361;
   font-weight: bold;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "roboto";
   cursor: pointer;
 }
 

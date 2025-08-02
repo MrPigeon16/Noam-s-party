@@ -9,7 +9,7 @@ const statusDIV = document.getElementById("status");
 const ticketNumberDIV = document.querySelector(".ticket-number");
 const holderNameDIV = document.querySelector(".holder-name");
 const scannedDIV = document.querySelector(".scanned");
-const peopleListDIV = document.getElementById("people-list");
+const peopleListDIV = document.querySelector(".people-list");
 
 // UI elements for buttons
 const redeemButtonDIV = document.getElementById("redeem");
@@ -82,7 +82,7 @@ async function checkTicket(ticketHash) {
       ticketNumberDIV.textContent = "not found";
       holderNameDIV.textContent = "not found";
       scannedDIV.textContent = "not found";
-      bodyDIV.style.backgroundColor = "red";
+      bodyDIV.style.backgroundColor = "#A80D1E";
       return;
     }
 
@@ -100,9 +100,9 @@ async function checkTicket(ticketHash) {
 
     // Checking if guest's ticket already scanned and changint the background color accordingly
     if (guest.inside) {
-      bodyDIV.style.backgroundColor = "yellow";
+      bodyDIV.style.backgroundColor = "#EB910C";
     } else {
-      bodyDIV.style.backgroundColor = "green";
+      bodyDIV.style.backgroundColor = "#44A802";
     }
   } catch (error) {
     // If there is an error connecting to the server, display an error message
@@ -166,4 +166,30 @@ refreshButtonDIV.addEventListener("click", () => {
   lastScannedTicket = "";
 });
 
-function peopleList(peopleList) {}
+function peopleListReader(peopleList) {
+  // Clear the existing list
+  peopleListDIV.innerHTML = "";
+
+  // Loop through each person in the list
+  peopleList.forEach((person) => {
+    // Create a new div for each person
+    const personNameDIV = document.createElement("div");
+    personNameDIV.textContent = person[0]; // person's name
+
+    const personStatusDIV = document.createElement("div");
+    personStatusDIV.textContent = person[1]; // person's scanned status
+
+    // append the person's name and scanned status
+    peopleListDIV.appendChild(personNameDIV);
+    peopleListDIV.appendChild(personStatusDIV);
+  });
+}
+
+const peopleList = [
+  ["Noam Binyamin", "SCANNED"],
+  ["John Doe", "NOT SCANNED"],
+  ["Jane Smith", "SCANNED"],
+  ["Alice Johnson", "NOT SCANNED"],
+];
+
+peopleListReader(peopleList);
