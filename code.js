@@ -21,6 +21,7 @@ let lastScannedTicket = "";
 // Backend URLs
 const BACKEND_URL = "https://backend-wx19.onrender.com/submit";
 const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/redeem";
+const BACKEND_URL_COMPLETE = "https://backend-wx19.onrender.com/redeem";
 
 // Camera handler
 const html5QrCode = new Html5Qrcode("reader");
@@ -216,3 +217,32 @@ const peopleList = [
 ];
 
 peopleListReader(peopleList);
+
+
+
+
+
+async function redeemTicket(ticketHash) {
+  try {
+    const response = await fetch(BACKEND_URL_COMPLETE, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({INFO: "Asking for all users"}), // Only send the hash!
+    });
+
+    // If the response is ok, update the status and check the ticket again
+    if (response.ok) {
+      statusDIV.textContent = "Redeemed!";
+      checkTicket(ticketHash);
+      return;
+    } else {
+      // If the response is not ok, display a failure message
+      statusDIV.textContent = "Redeem failed!";
+    }
+  } catch (error) {
+    statusDIV.textContent = "Error connecting to server.";
+    console.error(error);
+  }
+}
