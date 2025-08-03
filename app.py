@@ -60,3 +60,13 @@ def redeem():
         print("Error in /redeem:", e)
         return jsonify({"status": "error", "message, I got here somehow": str(e)}), 500
 
+
+
+@app.route('/COMPLETE',methods=['POST'])
+def COMPELETE():
+    try:
+        all_guest = database.get_all_guest()
+        return jsonify({"status": "ok", "guest_info": all_guest})
+    
+    except Exception as e:
+        return jsonify({"status": "error", "Can't get all the users": str(e)}), 500

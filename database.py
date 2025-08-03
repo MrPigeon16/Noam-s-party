@@ -44,3 +44,26 @@ def get_guest_info(hash_value):
         guest = c.fetchone()
     return guest
 
+def get_all_guest():
+    """
+    Function will get all the DB users and no, yes if they are inside yet or not
+    Return: Dict
+    """
+    all_guest = {}
+    with sqlite3.connect('party.db') as conn:
+        c = conn.cursor()
+        c.execute("""
+        SELECT 
+            name,
+            CASE inside 
+                WHEN 1 THEN 'Yes'
+                ELSE 'No'
+            END AS is_inside
+        FROM guests;
+        """)
+        info = c.fetchall()
+        for user in info:
+            all_guest[user[0]] = user[1]
+       
+    return all_guest
+
