@@ -65,9 +65,6 @@ function onScanSuccess(decodedText) {
   // Checking the ticket with the back-end
   checkTicket(lastScannedTicket);
 
-  // get all users from the back-end
-  get_all_users();
-
   // Returning the last scanned ticket
   return lastScannedTicket;
 }
@@ -91,6 +88,9 @@ async function checkTicket(ticketHash) {
       scannedDIV.textContent = "not found";
       bodyDIV.className = ""; // Resetting the body class
       bodyDIV.classList.add("bad-bg");
+
+      // get all users from the back-end and update the UI
+      get_all_users();
       return;
     }
 
@@ -218,9 +218,6 @@ redeemButtonDIV.addEventListener("click", () => {
   }
   // If a ticket has been scanned, redeem it
   redeemTicket(lastScannedTicket);
-
-  // get all users from the back-end
-  get_all_users();
 });
 
 // Function to redeem ticket
