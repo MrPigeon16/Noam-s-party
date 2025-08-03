@@ -15,6 +15,11 @@ const peopleListDIV = document.querySelector(".people-list");
 const redeemButtonDIV = document.getElementById("redeem");
 const refreshButtonDIV = document.getElementById("refresh");
 
+//UI elements for the status area:
+const statusBoxScannedDIV = document.getElementById("status-box-scanned");
+const statusBoxLeftDIV = document.getElementById("status-box-left");
+const statusBoxTotalDIV = document.getElementById("status-box-total");
+
 // Variable to store the last scanned ticket
 let lastScannedTicket = "";
 
@@ -22,6 +27,9 @@ let lastScannedTicket = "";
 const BACKEND_URL = "https://backend-wx19.onrender.com/submit";
 const BACKEND_URL_REEDEM = "https://backend-wx19.onrender.com/redeem";
 const BACKEND_URL_COMPLETE = "https://backend-wx19.onrender.com/COMPLETE";
+
+// get all users from the back-end
+get_all_users();
 
 // Camera handler
 const html5QrCode = new Html5Qrcode("reader");
@@ -56,6 +64,9 @@ function onScanSuccess(decodedText) {
 
   // Checking the ticket with the back-end
   checkTicket(lastScannedTicket);
+
+  // get all users from the back-end
+  get_all_users();
 
   // Returning the last scanned ticket
   return lastScannedTicket;
@@ -121,20 +132,76 @@ async function get_all_users() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({INFO: "Asking for all users"}), // Only send the hash!
+      body: JSON.stringify({ INFO: "Asking for all users" }), // Only send the hash!
     });
 
-    // If the response is ok, update the status and check the ticket again
+    // Function to read the list of people and display them
+    function peopleListReader(guests) {
+      // Clear the existing list
+      peopleListDIV.innerHTML = "";
+
+      // index for the total number of guests:
+      let i = 1;
+
+      // Loop through each guest and create a div for their name and scanned status
+      Object.entries(guests).forEach(([guest, status]) => {
+        // Create a new div for each person
+        const personNameDIV = document.createElement("div");
+        personNameDIV.textContent = guest; // person's name
+
+        const personStatusDIV = document.createElement("div");
+        // person's scanned status
+        if (status === "Yes") {
+          personStatusDIV.textContent = "Redeemed";
+        } else if (status === "No") {
+          personStatusDIV.textContent = "Not Redeemed";
+        }
+
+        // Create a div for the person's index
+        const personIndexDIV = document.createElement("div");
+        personIndexDIV.textContent = `${i}.`; // person's index
+
+        // create a div for the person's row in the list
+        const personRowDIV = document.createElement("div");
+
+        if (status === "Yes") {
+          personRowDIV.classList.add("person-row-scanned");
+        } else if (status === "No") {
+          personRowDIV.classList.add("person-row");
+        }
+
+        // append the person's name and status to the row
+        personRowDIV.appendChild(personIndexDIV);
+        personRowDIV.appendChild(personNameDIV);
+        personRowDIV.appendChild(personStatusDIV);
+
+        // Append the person's name and scanned status
+        peopleListDIV.appendChild(personRowDIV);
+
+        i++; // Increment the index for each guest
+      });
+
+      // Update the status box with the total number of guests
+      statusBoxTotalDIV.textContent = `Total Guests: ${
+        Object.keys(guests).length
+      }`;
+      statusBoxScannedDIV.textContent = `Scanned Guests: ${
+        Object.values(guests).filter((status) => status === "Yes").length
+      }`;
+      statusBoxLeftDIV.textContent = `Guests Left: ${
+        Object.values(guests).filter((status) => status === "No").length
+      }`;
+    }
+
+    // If the response is ok, update the status and check the ticket again and run the peopleListReader function
     if (response.ok) {
-      const data =  await response.json();
+      const data = await response.json();
       const guests = data.guest_info;
-      console.log(guests)
-
-
+      peopleListReader(guests);
       return;
     } else {
       // If the response is not ok, display a failure message
-      statusDIV.textContent = "Redeem failed!";
+      statusDIV.textContent = "User Update failed!";
     }
   } catch (error) {
     statusDIV.textContent = "Error connecting to server.";
@@ -151,6 +218,9 @@ redeemButtonDIV.addEventListener("click", () => {
   }
   // If a ticket has been scanned, redeem it
   redeemTicket(lastScannedTicket);
+
+  // get all users from the back-end
+  get_all_users();
 });
 
 // Function to redeem ticket
@@ -192,61 +262,7 @@ refreshButtonDIV.addEventListener("click", () => {
 
   // resetting the last scanned ticket
   lastScannedTicket = "";
+
+  // get all users from the back-end
+  get_all_users();
 });
-
-function peopleListReader(peopleList) {
-  // Clear the existing list
-  peopleListDIV.innerHTML = "";
-
-  // Loop through each person in the list
-  peopleList.forEach((person) => {
-    // Create a new div for each person
-    const personNameDIV = document.createElement("div");
-    personNameDIV.textContent = person[0]; // person's name
-
-    const personStatusDIV = document.createElement("div");
-    personStatusDIV.textContent = person[1]; // person's scanned status
-
-    // append the person's name and scanned status
-    peopleListDIV.appendChild(personNameDIV);
-    peopleListDIV.appendChild(personStatusDIV);
-  });
-}
-
-const peopleList = [
-  ["Noam Binyamin", "SCANNED"],
-  ["John Doe", "NOT SCANNED"],
-  ["Jane Smith", "SCANNED"],
-  ["Alice Johnson", "NOT SCANNED"],
-  ["Bob Brown", "SCANNED"],
-  ["Charlie Davis", "NOT SCANNED"],
-  ["Eve White", "SCANNED"],
-  ["Frank Black", "NOT SCANNED"],
-  ["Grace Green", "SCANNED"],
-  ["Hank Blue", "NOT SCANNED"],
-  ["Ivy Yellow", "SCANNED"],
-  ["Jack Red", "NOT SCANNED"],
-  ["Kathy Purple", "SCANNED"],
-  ["Leo Orange", "NOT SCANNED"],
-  ["Mia Pink", "SCANNED"],
-  ["Nina Gray", "NOT SCANNED"],
-  ["Oscar Silver", "SCANNED"],
-  ["Paul Gold", "NOT SCANNED"],
-  ["Quinn Teal", "SCANNED"],
-  ["Rita Cyan", "NOT SCANNED"],
-  ["Sam Magenta", "SCANNED"],
-  ["Tina Maroon", "NOT SCANNED"],
-  ["Uma Olive", "SCANNED"],
-  ["Vera Coral", "NOT SCANNED"],
-  ["Will Indigo", "SCANNED"],
-  ["Xena Violet", "NOT SCANNED"],
-  ["Yara Peach", "SCANNED"],
-  ["Zane Mint", "NOT SCANNED"],
-];
-
-peopleListReader(peopleList);
-
-
-
-
-

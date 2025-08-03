@@ -109,16 +109,42 @@ button {
 
 .people-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   max-height: fit-content;
   width: 85%;
   height: 400px;
   line-height: 60px;
   overflow-y: scroll;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   background-color: rgba(255, 255, 255, 0.808);
+}
+
+.person-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+
+.person-row div {
+  width: 33%;
+  text-align: center;
+}
+
+.person-row-scanned {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 128, 19, 1) 0%,
+    rgba(175, 255, 94, 1) 100%
+  );
+}
+
+.person-row-scanned div {
+  width: 33%;
+  text-align: center;
 }
 
 .plain-bg {
@@ -151,4 +177,32 @@ button {
     rgba(232, 159, 14, 1) 0%,
     rgba(255, 195, 0, 1) 100%
   );
+}
+
+.status-container {
+  display: flex;
+  width: 85%;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+#status-box-scanned,
+#status-box-left,
+#status-box-total {
+  width: 30%;
+  height: 50px;
+  font-size: 25px;
+  text-align: center;
+  line-height: 50px;
+  background: linear-gradient(
+    90deg,
+    rgb(107, 104, 192) 0%,
+    rgb(141, 133, 255) 100%
+  );
+
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  font-family: "roboto";
 }
