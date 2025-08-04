@@ -2,7 +2,7 @@ services:
   - type: web
     name: flask-app
     env: python
-    startCommand: gunicorn backend:app --bind 0.0.0.0:10000
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
     plan: free
     envVars:
       - key: FLASK_ENV
@@ -12,5 +12,3 @@ services:
     branch: main
     healthCheckPath: /
     runtime: python3
-    ports:
-      - 10000

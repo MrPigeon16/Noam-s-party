@@ -1,69 +1,55 @@
-import sqlite3
+# database.py
 
-def create_database():
-    with sqlite3.connect('party.db') as conn:
-        c = conn.cursor()
-        c.execute('''
-            CREATE TABLE IF NOT EXISTS guests (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                hash TEXT NOT NULL UNIQUE,
-                inside INTEGER DEFAULT 0
-            )
-        ''')
-        conn.commit()
+import psycopg2
+import os
 
-def add_guest(name, hash_value):
-    try:
-        with sqlite3.connect('party.db') as conn:
-            c = conn.cursor()
-            c.execute(
-                'INSERT INTO guests (name, hash, inside) VALUES (?, ?, ?)',
-                (name, hash_value, int(False))
-            )
-            conn.commit()
-    except sqlite3.IntegrityError:
-        print(f"Guest with hash '{hash_value}' already exists.")
+# Get the connection string from the environment variable or fallback for local testing
+DB_URL = os.getenv("DATABASE_URL") or "postgresql://partydb_b179_user:NwPRDelte4OkRNBJosrDvh2WPVP2ASpy@dpg-d287e4uuk2gs73evjncg-a.frankfurt-postgres.render.com/partydb_b179"
 
-def update_inside_status(hash_value, inside_status):
-    with sqlite3.connect('party.db') as conn:
-        c = conn.cursor()
-        c.execute(
-            'UPDATE guests SET inside = ? WHERE hash = ?',
-            (int(inside_status), hash_value)
-        )
-        conn.commit()
+def get_connection():
+    return psycopg2.connect(DB_URL, sslmode="require")
+
+def create_guests_table():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS guests (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            hash TEXT UNIQUE NOT NULL,
+            inside BOOLEAN DEFAULT FALSE
+        );
+    """)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def get_guest_info(hash_value):
-    with sqlite3.connect('party.db') as conn:
-        c = conn.cursor()
-        c.execute(
-            'SELECT id, name, hash, inside FROM guests WHERE hash = ?',
-            (hash_value,)
-        )
-        guest = c.fetchone()
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, name, hash, inside FROM guests WHERE hash = %s", (hash_value,))
+    guest = cur.fetchone()
+    cur.close()
+    conn.close()
     return guest
 
-def get_all_guest():
-    """
-    Function will get all the DB users and no, yes if they are inside yet or not
-    Return: Dict
-    """
-    all_guest = {}
-    with sqlite3.connect('party.db') as conn:
-        c = conn.cursor()
-        c.execute("""
-        SELECT 
-            name,
-            CASE inside 
-                WHEN 1 THEN 'Yes'
-                ELSE 'No'
-            END AS is_inside
-        FROM guests;
-        """)
-        info = c.fetchall()
-        for user in info:
-            all_guest[user[0]] = user[1]
-       
-    return all_guest
+def update_inside_status(hash_value, inside_status=True):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE guests SET inside = %s WHERE hash = %s", (inside_status, hash_value))
+    conn.commit()
+    cur.close()
+    conn.close()
 
+def get_all_guest():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, name, hash, inside FROM guests")
+    guests = cur.fetchall()
+    cur.close()
+    conn.close()
+    return guests
+
+if __name__ == "__main__":
+    create_guests_table()
+    print("guests table created (if not already)")
