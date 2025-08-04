@@ -35,8 +35,15 @@ get_all_users();
 const html5QrCode = new Html5Qrcode("reader");
 Html5Qrcode.getCameras()
   .then((devices) => {
+    let cameraId;
     if (devices && devices.length) {
-      const cameraId = devices[1].id;
+      if (devices.length < 2) {
+        cameraId = devices[0].id;
+      } else if (devices.length >= 2) {
+        // If there are multiple cameras, select the second one
+        cameraId = devices[1].id;
+      }
+
       html5QrCode.start(
         cameraId,
         {
@@ -88,9 +95,6 @@ async function checkTicket(ticketHash) {
       scannedDIV.textContent = "not found";
       bodyDIV.className = ""; // Resetting the body class
       bodyDIV.classList.add("bad-bg");
-
-      // get all users from the back-end and update the UI
-      get_all_users();
       return;
     }
 
@@ -113,6 +117,9 @@ async function checkTicket(ticketHash) {
     } else {
       bodyDIV.classList.add("good-bg");
     }
+
+    // get all users from the back-end and update the UI
+    get_all_users();
   } catch (error) {
     // If there is an error connecting to the server, display an error message
     statusDIV.textContent = "Error connecting to server.";
@@ -185,10 +192,10 @@ async function get_all_users() {
       statusBoxTotalDIV.textContent = `Total Guests: ${
         Object.keys(guests).length
       }`;
-      statusBoxScannedDIV.textContent = `Scanned Guests: ${
+      statusBoxScannedDIV.textContent = `Redeemed Guests: ${
         Object.values(guests).filter((status) => status === "Yes").length
       }`;
-      statusBoxLeftDIV.textContent = `Guests Left: ${
+      statusBoxLeftDIV.textContent = `To Redeemed: ${
         Object.values(guests).filter((status) => status === "No").length
       }`;
     }
