@@ -50,6 +50,10 @@ def get_all_guest():
     conn.close()
     return guests
 
+
+
+print(get_guest_info("85592f83c488a110d7cee47bb0fb8b4765367a8378d64f03e35a757ff93bf90b"))
+
 if __name__ == "__main__":
     create_guests_table()
     print("guests table created (if not already)")
