@@ -42,13 +42,24 @@ def update_inside_status(hash_value, inside_status=True):
     conn.close()
 
 def get_all_guest():
+    all_guest = {}
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, name, hash, inside FROM guests")
+    cur.execute("""
+        SELECT 
+            name,
+            CASE 
+                WHEN inside = TRUE THEN 'Yes'
+                ELSE 'No'
+            END AS is_inside
+        FROM guests;
+    """)
     guests = cur.fetchall()
+    for name, is_inside in guests:
+        all_guest[name] = is_inside
     cur.close()
     conn.close()
-    return guests
+    return all_guest
 
 
 
