@@ -1,5 +1,3 @@
-# database.py
-
 import psycopg2
 import os
 
@@ -63,8 +61,46 @@ def get_all_guest():
 
 
 
-print(get_guest_info("85592f83c488a110d7cee47bb0fb8b4765367a8378d64f03e35a757ff93bf90b"))
+def add_guest(name, hash_value):
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO guests (name, hash) VALUES (%s, %s) RETURNING id;",
+            (name, hash_value)
+        )
+        guest_id = cur.fetchone()[0]
+        conn.commit()
+        cur.close()
+        conn.close()
+        return guest_id  # You can return the ID of the inserted guest
+    except psycopg2.Error as e:
+        print("Error inserting guest:", e)
+        return None
+
+
+def every_one_out():
+
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE guests SET inside = FALSE;")
+    conn.commit()
+    cur.close()
+    conn.close()
+
+
+
+def every_one_inside():
+
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE guests SET inside = TRUE;")
+    conn.commit()
+    cur.close()
+    conn.close()
+
+
+
 
 if __name__ == "__main__":
-    create_guests_table()
-    print("guests table created (if not already)")
+    every_one_inside()
