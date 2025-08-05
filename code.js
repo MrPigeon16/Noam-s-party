@@ -108,7 +108,12 @@ async function checkTicket(ticketHash) {
     statusDIV.textContent = "Ticket found!";
     ticketNumberDIV.textContent = `${guest.id}`;
     holderNameDIV.textContent = `${guest.name}`;
-    scannedDIV.textContent = `${guest.inside}`;
+
+    if (guest.inside) {
+      scannedDIV.textContent = "Yes ✅";
+    } else {
+      scannedDIV.textContent = "No ❌";
+    }
 
     // Checking if guest's ticket already scanned and changint the background color accordingly
     bodyDIV.className = ""; // Resetting the body class
@@ -159,9 +164,9 @@ async function get_all_users() {
         const personStatusDIV = document.createElement("div");
         // person's scanned status
         if (status === "Yes") {
-          personStatusDIV.textContent = "Redeemed";
+          personStatusDIV.textContent = "Redeemed ✅";
         } else if (status === "No") {
-          personStatusDIV.textContent = "Not Redeemed";
+          personStatusDIV.textContent = "Not Redeemed ❌";
         }
 
         // Create a div for the person's index
