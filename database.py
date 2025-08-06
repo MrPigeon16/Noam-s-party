@@ -75,7 +75,7 @@ def add_guest(name, hash_value):
         conn.close()
         return guest_id  # You can return the ID of the inserted guest
     except psycopg2.Error as e:
-        print("Error inserting guest:", e)
+        print("Error inserting guest:", name)
         return None
 
 
@@ -90,6 +90,7 @@ def every_one_out():
 
 
 
+
 def every_one_inside():
 
     conn = get_connection()
@@ -100,7 +101,23 @@ def every_one_inside():
     conn.close()
 
 
+def delete_DB_content():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM guests;")
+    conn.commit()
+    cur.close()
+    conn.close()
 
 
-if __name__ == "__main__":
-    every_one_inside()
+
+def remove_person(hash_val):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM guests WHERE hash = %s;", (hash_val,))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+
+
